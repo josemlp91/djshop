@@ -8,15 +8,35 @@ from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from djshop.apps.offers.models import BundleOffer, GroupOffer
+from djshop.apps.public.forms import ShoppingCartCheckoutForm
 from djshop.apps.public.shopping_cart import SelectedProduct
+from djshop.apps.sale.models import Sale
 from djshop.apps.store.models import Product
 
 
 # View shopping cart
 def view_shopping_cart(request):
-    replacements = {}
+    if request.method == "POST":
+        form = ShoppingCartCheckoutForm(request.POST)
+
+        if form.is_valid():
+            shopping_cart = request.session["shopping_cart"]
+            selected_products = SelectedProduct.get_selected_products(request)
+            first_name = form.cleaned_data.get("first_name")
+            last_name = form.cleaned_data.get("last_name")
+            telephone_number = form.cleaned_data.get("telephone_number")
+            email = form.cleaned_data.get("email")
+            sale = Sale.create_from_shopping_cart(
+                shopping_cart, selected_products, first_name, last_name, telephone_number, email
+            )
+            del request.session["shopping_cart"]
+            return HttpResponseRedirect(reverse("public:shopping_cart_checkout", args=(sale.code,)))
+    else:
+        form = ShoppingCartCheckoutForm()
+
+    replacements = {"form": form}
     if "shopping_cart" in request.session and len(request.session["shopping_cart"]["products"].keys()) > 0:
-        selected_products = _get_selected_products(request)
+        selected_products = SelectedProduct.get_selected_products(request)
 
         replacements["products"] = selected_products
         replacements["total_price"] = request.session["shopping_cart"]["total_price"]
@@ -102,11 +122,17 @@ def remove_from_cart(request):
     return HttpResponseRedirect(reverse("public:view_shopping_cart"))
 
 
+def shopping_cart_checkout(request, sale_code):
+    sale = Sale.objects.get(code=sale_code)
+    replacements = {"sale": sale}
+    return render(request, "public/shop/shopping_cart_checkout.html", replacements)
+
+
 # Apply group offer if needed
 def _update_shopping_chart(request):
     request.session["shopping_cart"]["final_price"] = float(request.session["shopping_cart"]["total_price"])
     request.session["shopping_cart"]["group_offer_id"] = None
-    selected_products = _get_selected_products(request)
+    selected_products = SelectedProduct.get_selected_products(request)
     for group_offer in GroupOffer.objects.all():
         print group_offer.name
         if group_offer.is_applicable(selected_products):
@@ -117,10 +143,4 @@ def _update_shopping_chart(request):
             print "{0} is not applicable".format(group_offer.name)
 
 
-# Return the list of selected products of the shopping cart
-def _get_selected_products(request):
-    selected_products = []
-    for json_selected_product in request.session["shopping_cart"]["products"].values():
-        selected_product = SelectedProduct.from_json(json_selected_product)
-        selected_products.append(selected_product)
-    return selected_products
+

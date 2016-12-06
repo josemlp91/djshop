@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'djshop.apps.base',
     'djshop.apps.offers',
+    'djshop.apps.sale',
     'djshop.apps.store',
     'djshop.apps.public',
     'sorl.thumbnail',

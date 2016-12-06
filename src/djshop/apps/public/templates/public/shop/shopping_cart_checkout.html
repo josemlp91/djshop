@@ -1,0 +1,12 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+{% load thumbnail %}
+
+{% block page_title %}
+    View your shoppint cart
+{% endblock %}
+
+{% block content %}
+    {{sale.code}} {{sale.final_price}} €
+    <button>PAY</button>
+{% endblock %}

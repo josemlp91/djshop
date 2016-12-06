@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 from __future__ import unicode_literals
 
@@ -107,3 +108,12 @@ class SelectedProduct(object):
                 "%Y-%m-%d %H:%M:%S"
             )
         )
+
+    # Return the list of selected products of the shopping cart
+    @staticmethod
+    def get_selected_products(request):
+        selected_products = []
+        for json_selected_product in request.session["shopping_cart"]["products"].values():
+            selected_product = SelectedProduct.from_json(json_selected_product)
+            selected_products.append(selected_product)
+        return selected_products

@@ -21,3 +21,10 @@ class LoginForm(forms.Form):
 
         cleaned_data["user"] = user
         return cleaned_data
+
+
+class ShoppingCartCheckoutForm(forms.Form):
+    first_name = forms.CharField(label=u"First name")
+    last_name = forms.CharField(label=u"Last name")
+    telephone_number = forms.CharField(label=u"Telephone number")
+    email = forms.EmailField(label=u"Email")
