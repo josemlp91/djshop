@@ -11,6 +11,16 @@ Djshop is a test shop made in Django. Do not use in production!
 
 # Installation
 
+## Set up virtualenv
+````sh
+$ cd djshop # move to the root of the repository
+$ virtualenv venv
+$ . venv/bin/activate
+$ pip install -r src/requirements.txt
+````
+
+## Local settings
+
 Create a file settings_local.py in **/src/djshop/settings_local.py** with this structure:
 
 ````python
@@ -44,6 +54,15 @@ EMAIL_HOST_USER = '<user email>'
 EMAIL_HOST_PASSWORD = '<user email password>'
 DEFAULT_FROM_EMAIL = '<default from email>'
 ````
+
+## Create a superuser
+
+````python
+python src/manage.py createsuperuser
+````
+
+Use this superuser to manage the shop.
+
 
 # Legal notice
 
