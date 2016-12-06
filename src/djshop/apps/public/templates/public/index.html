@@ -1,0 +1,46 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+{% load thumbnail %}
+
+{% block page_title %}
+    Index of DJShop
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <h1>Buy in our shop!</h1>
+        </div>
+    </div>
+    <div class="row">
+        {% if products|length == 0 %}
+            <div class="col-md-9">
+                There are no products in this shop
+            </div>
+        {% else %}
+            {% for product in products %}
+                <div class="col-md-4">
+                    <div class="row">
+                        <div class="col-md-3">
+                            {% if product.main_image %}
+                                {% thumbnail product.main_image "200x200" as im %}
+                                    <img src="{{im.url}}" alt="{{product.name}}" width="{{ im.width }}" height="{{ im.height }}" class="img-thumbnail" />
+                                {% empty %}
+                                    <img src="{{product.main_image.url}}" alt="{{product.name}}" class="img-thumbnail" />
+                                {% endthumbnail %}
+                            {% endif %}
+                        </div>
+                        <div class="col-md-8">
+                            <h2 class="product_name">{{product.name}}</h2>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            {% include "public/shop/components/add_to_cart.html" %}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+{% endblock content %}

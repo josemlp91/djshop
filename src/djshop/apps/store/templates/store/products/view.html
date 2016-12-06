@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block page_title %}
+    Admin of DJShop :: {{product.name}}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <h1>{{product.name}}</h1>
+        </div>
+    </div>
+    <a href="{% url 'store:edit_product' product.id %}"><span class="fa fa-pencil"></span></a>
+    <a href="{% url 'store:delete_product' product.id %}"><span class="fa fa-trash"></span></a>
+    <div>
+        {{product.price}}
+    </div>
+    <div>
+        {{product.description}}
+    </div>
+{% endblock content %}

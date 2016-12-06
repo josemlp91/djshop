@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Djshop :: {% block page_title %}{% endblock page_title %}</title>
+
+        <link rel='shortcut icon' type='image/png' sizes='16x16' href='{% static "img/favicon-16x16.png" %}' />
+        <link rel='shortcut icon' type='image/png' sizes='32x32' href='{% static "img/favicon-32x32.png" %}' />
+
+        {% block css %}
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+            <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        {% endblock css %}
+
+        {% block js %}
+            <script
+              src="https://code.jquery.com/jquery-2.2.4.min.js"
+              integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+              crossorigin="anonymous">
+            </script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        {% endblock js %}
+    </head>
+
+    <body>
+
+        {% block header %}
+            {% include "base/header.html" %}
+        {% endblock header %}
+
+        <div id="content_wrapper">
+
+            <div id="content_menu">
+                {% block content_menu %}
+                {% endblock content_menu %}
+            </div>
+            <div id="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <div id="content_footer">
+                {% block content_footer %}
+                {% endblock content_footer %}
+            </div>
+        </div>
+
+        {% block footer  %}
+            {% include "base/footer.html" %}
+        {% endblock footer %}
+
+    </body>
+
+</html>

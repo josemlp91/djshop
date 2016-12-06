@@ -1,0 +1,17 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block page_title %}
+    Admin of DJShop :: Delete
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Delete {{instance.meta_verbose_name}}</h1>
+        </div>
+        <div class="col-md-12">
+            {% include "base/forms/form.html" %}
+        </div>
+    </div>
+{% endblock content %}

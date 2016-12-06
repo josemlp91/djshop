@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block page_title %}
+    Admin of DJShop
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <h1>Shop admin</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <a href="{% url 'store:view_products' %}">Products</a>
+        </div>
+        <div class="col-md-4">
+            <a href="{% url 'offers:index' %}">Offers</a>
+        </div>
+    </div>
+{% endblock content %}

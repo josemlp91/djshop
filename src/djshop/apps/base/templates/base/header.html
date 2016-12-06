@@ -1,0 +1,18 @@
+{% load staticfiles %}
+<div id="header">
+    <div id="header_logo">
+        <a href="{% url 'index' %}" title="Go to index">
+            <img id="header_image" src="{% static 'img/logo.png' %}" alt="DJShop Logo" />
+        </a>
+    </div>
+    {% with user=request.user %}
+        {% if user and user.is_authenticated %}
+            {{user.username}} <a href="{% url 'public:logout' %}">Logout</a> {% if perms.store.can_create_product %}<a href="{% url 'store:index' %}">Admin</a>{% endif %}
+        {% else %}
+            <a href="{% url 'public:login' %}">Login</a>
+        {% endif %}
+    {% endwith %}
+    <a href="{% url 'public:view_shopping_cart' %}">
+        <span class="fa fa-shopping-cart"></span> View shopping cart ({{request.session.shopping_cart.products|length}})
+    </a>
+</div>

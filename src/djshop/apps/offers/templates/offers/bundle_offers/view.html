@@ -1,0 +1,19 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block page_title %}
+    Admin of DJShop :: {{bundle_offer.name}}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <h1>{{bundle_offer.name}}</h1>
+        </div>
+    </div>
+    <a href="{% url 'bundle_offer:edit_bundle_offer' bundle_offer.id %}"><span class="fa fa-pencil"></span></a>
+    <a href="{% url 'bundle_offer:delete_bundle_offer' bundle_offer.id %}"><span class="fa fa-trash"></span></a>
+    <div>
+        {{bundle_offer.description}}
+    </div>
+{% endblock content %}

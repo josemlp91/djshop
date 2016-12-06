@@ -1,0 +1,4 @@
+<form action="{% url 'public:remove_from_cart' %}" method="post" class="form-inline">
+    <input type="hidden" name="selected_product_id" value="{{product.id}}" />
+    <button type="submit" name="remove_from_cart" value="Send" class="btn btn-success">Remove</button>
+</form>

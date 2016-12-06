@@ -1,0 +1,24 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+
+{% block page_title %}
+    Admin of DJShop
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-4">
+            <h1>Group offers</h1>
+        </div>
+    </div>
+    <a href="{% url 'offers:new_group_offer' %}"><span class="fa fa-plus"></span></a>
+    {% for group_offer in group_offers %}
+        <div class="row">
+            <div class="col-md-12">
+                {{group_offer.name}}
+                <a href="{% url 'offers:edit_group_offer' group_offer.id %}"><span class="fa fa-pencil"></span></a>
+                <a href="{% url 'offers:delete_group_offer' group_offer.id %}"><span class="fa fa-trash"></span></a>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock content %}
