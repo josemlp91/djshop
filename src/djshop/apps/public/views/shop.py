@@ -26,9 +26,7 @@ def view_shopping_cart(request):
             last_name = form.cleaned_data.get("last_name")
             telephone_number = form.cleaned_data.get("telephone_number")
             email = form.cleaned_data.get("email")
-            sale = Sale.create_from_shopping_cart(
-                shopping_cart, selected_products, first_name, last_name, telephone_number, email
-            )
+            sale = Sale.factory_from_shopping_cart(shopping_cart, selected_products, first_name, last_name, telephone_number, email)
             del request.session["shopping_cart"]
             return HttpResponseRedirect(reverse("public:shopping_cart_checkout", args=(sale.code,)))
     else:
