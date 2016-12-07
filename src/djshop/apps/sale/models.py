@@ -49,7 +49,6 @@ class Sale(models.Model):
 
     @staticmethod
     def factory_from_shopping_cart(shopping_cart, selected_products, first_name, last_name, telephone_number, email):
-        print "Sale.create"
         # Shopping cart data
         total_price = shopping_cart["total_price"]
         final_price = shopping_cart["final_price"]
@@ -58,7 +57,6 @@ class Sale(models.Model):
             code=Sale.get_random_code(), creation_datetime=timezone.now(),
             total_price=total_price, final_price=final_price
         )
-        print type(sale)
 
         # If there is an offer
         if shopping_cart["group_offer_id"]:

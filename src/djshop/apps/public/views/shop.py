@@ -132,13 +132,12 @@ def _update_shopping_chart(request):
     request.session["shopping_cart"]["group_offer_id"] = None
     selected_products = SelectedProduct.get_selected_products(request)
     for group_offer in GroupOffer.objects.all():
-        print group_offer.name
+        # Check if group offer can be applied to the set of selected products
         if group_offer.is_applicable(selected_products):
-            print "{0} is applicable".format(group_offer.name)
+            # In that case, get discounted price and store that this shopping cart enjoys a discount (group offer)
             request.session["shopping_cart"]["group_offer_id"] = group_offer.id
             request.session["shopping_cart"]["final_price"] = group_offer.get_discounted_price(request.session["shopping_cart"]["final_price"])
-        else:
-            print "{0} is not applicable".format(group_offer.name)
+
 
 
 
