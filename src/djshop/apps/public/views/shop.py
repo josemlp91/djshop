@@ -71,9 +71,7 @@ def add_to_cart(request):
 
     # Check if there is some bundle offer that can be applied
     for bundle_offer in BundleOffer.objects.filter(product=selected_product.product):
-        print "Checking {0}".format(bundle_offer.name)
         if bundle_offer.can_apply_discount(selected_product):
-            print "can apply discount"
             selected_product.add_bundle_offer(bundle_offer)
 
     request.session["shopping_cart"]["products"][product_id] = selected_product.to_json()
