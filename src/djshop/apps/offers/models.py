@@ -88,7 +88,7 @@ class BundleOffer(models.Model):
             return False
         if selected_product.product.id != self.product.id:
             return False
-        if selected_product.amount < self.bundle_product_units:
+        if int(selected_product.amount) < int(self.bundle_product_units):
             return False
         return True
 
@@ -96,6 +96,10 @@ class BundleOffer(models.Model):
     # None implies it has no discount
     def get_discounted_price(self, selected_product):
         if not self.can_apply_discount(selected_product):
+            return None
+
+        # Check if the product is at least a bundle
+        if int(selected_product.amount) < self.bundle_product_units:
             return None
 
         num_of_bundles = int(selected_product.amount) / self.bundle_product_units
