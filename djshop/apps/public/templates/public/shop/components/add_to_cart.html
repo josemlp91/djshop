@@ -1,18 +1,19 @@
 <form action="{% url 'public:add_to_cart' %}" method="post" class="form-inline">
     <input type="hidden" name="product_id" value="{{product.id}}" />
     {% if product.price_type == "price_per_unit" %}
-        <div class="form-group">
-            <label>
-                <span class="">Units ({{product.price}} € / portion)</span>
-                <input type="number" step="1" min="0" name="units"/> portions
-            </label>
+        <div class="price-box">
+                <span>Units ({{product.price}} € / portion)</span>
+                <input class="form-control unit-input" type="number" step="1" min="0" name="units"/> portions
+
         </div>
+
     {% elif product.price_type == "price_per_serving" %}
         <div class="form-group">
             <label>
                 <span class="">Weight ({{product.price}} € / {{product.serving_size}})</span>
                 <input type="number"
                        step="50"
+                       class="form-control unit-input"
                        placeholder="{{product.serving_size.weight}}"
                        {% if product.min_serving_size %}min="{{product.min_serving_size}}"{% else %}min="0"{% endif %}
                        {% if product.max_serving_size %}max="{{product.max_serving_size}}"{% endif %}
@@ -20,5 +21,6 @@
             </label>
         </div>
     {% endif %}
-    <button type="submit" name="add_to_cart" value="Send" class="btn btn-success">Add to cart</button>
+    <br><br><br><br>
+    <button type="submit" name="add_to_cart" value="Send" class="btn btn-primary btn-lg btn-block">Add to cart</button>
 </form>

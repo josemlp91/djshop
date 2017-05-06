@@ -12,9 +12,11 @@ class ProductCategory(models.Model):
     name = models.CharField(max_length=128, verbose_name=u"Name of the product category")
     description = models.TextField(verbose_name=u"Description of the product category", default="", blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
+    def __unicode__(self):
+        return self.name
 
 # Each one of the products of the shop
 class Product(models.Model):
@@ -46,6 +48,9 @@ class Product(models.Model):
 
     categories = models.ManyToManyField("store.ProductCategory",
                                         verbose_name=u"Product categories", related_name="products")
+
+    def __str__(self):
+        return self.name
 
     def __unicode__(self):
         return self.name

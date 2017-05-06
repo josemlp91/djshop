@@ -33,8 +33,11 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="{% url 'home' %}">DJShop</a>
 
+        <a href="{% url 'home' %}" title="Go to home">
+            <img id="header_image" width="120px" src="{% static 'img/logo.png' %}" alt="DJShop Logo" />
+        </a>
+       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
@@ -46,9 +49,16 @@
             {% if request.user.is_authenticated %}
               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
-                <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %}</a>
+                <a class="nav-link" href="{% url 'users:detail' request.user.username  %}">{% trans "My Profile" %} ({{user.username}})</a>
               </li>
-              <li class="nav-item">
+             
+               <li class="nav-item">
+                <a class="nav-link" href="{% url 'public:view_shopping_cart' %}">
+                  <span class="fa fa-shopping-cart"></span> Shopping cart ({{request.session.shopping_cart.products|length}})
+                </a>
+              </li>
+
+               <li class="nav-item">
                 {# URL provided by django-allauth/account/urls.py #}
                 <a class="nav-link" href="{% url 'account_logout' %}">{% trans "Sign Out" %}</a>
               </li>
@@ -61,12 +71,17 @@
                 {# URL provided by django-allauth/account/urls.py #}
                 <a id="log-in-link" class="nav-link" href="{% url 'account_login' %}">{% trans "Sign In" %}</a>
               </li>
+
+           
+
             {% endif %}
           </ul>
         </div>
       </nav>
 
     </div>
+
+
 
     <div class="container">
 
@@ -79,6 +94,8 @@
       {% block content %}
         <p>Use this document as a way to quick start any new project.</p>
       {% endblock content %}
+
+
 
     </div> <!-- /container -->
 

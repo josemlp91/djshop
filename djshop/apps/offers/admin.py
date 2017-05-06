@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import GroupOffer
+from .models import BundleOffer
+
+admin.site.register(GroupOffer)
+admin.site.register(BundleOffer)

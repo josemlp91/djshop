@@ -85,7 +85,7 @@ def add_to_cart(request):
     request.session.modified = True
 
     # Redirect to shop
-    return HttpResponseRedirect(reverse("index"))
+    return HttpResponseRedirect(reverse("home"))
 
 
 # Remove product from shopping cart

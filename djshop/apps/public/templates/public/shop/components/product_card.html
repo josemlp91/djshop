@@ -1,0 +1,13 @@
+
+<div class="card mb-3">
+    {% if product.main_image %}
+        <img class="card-img-top" src="{{product.main_image.url}}" alt="{{product.name}}" width="200px" class="img-thumbnail" />
+    {% endif %}
+
+  <div class="card-block">
+    <h4 class="card-title">{{product.name}}</h4>
+    {% include "public/shop/components/add_to_cart.html" %}
+  </div>
+</div>
+
+
