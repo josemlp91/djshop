@@ -1,0 +1,53 @@
+version: '2'
+
+volumes:
+  postgres_data_dev: {}
+  postgres_backup_dev: {}
+
+services:
+  mysql:
+    build: ./compose/mysql
+    volumes_from:
+      - datastore
+    env_file: env.dev
+  datastore:
+    image: busybox
+    volumes:
+      - /var/lib/mysql
+  
+  
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    links:
+      - mysql
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    ports:
+      - '8081:80'
+      
+  
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile-dev
+    command: /start-dev.sh
+    env_file: env.dev
+    environment:
+      WAIT_HOSTS: mysql:3306
+    depends_on: 
+      - mysql   
+    links: 
+      - mysql  
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "8025:8025"
+

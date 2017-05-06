@@ -1,0 +1,43 @@
+version: '2'
+
+volumes:
+  postgres_data: {}
+  postgres_backup: {}
+
+services:
+  mysql:
+    build: ./compose/mysql
+    volumes_from:
+      - datastore
+    env_file: env.prod
+  datastore:
+    image: busybox
+    volumes:
+      - /var/lib/mysql
+
+  
+
+  django:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    user: django
+    depends_on: 
+      - mysql   
+      - redis
+    command: /gunicorn.sh
+    env_file: env.prod
+
+  nginx:
+    build: ./compose/nginx
+    depends_on:
+      - django
+
+    ports:
+      - "0.0.0.0:80:80"
+
+
+  redis:
+    image: redis:3.0
+
+
